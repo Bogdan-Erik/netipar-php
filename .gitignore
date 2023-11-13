@@ -20,3 +20,5 @@ yarn-error.log
 /vendor-bin
 /draft.yaml
 /.blueprint
+llers
+ts/Traits
