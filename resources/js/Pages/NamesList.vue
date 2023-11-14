@@ -3,10 +3,10 @@
         <form @submit.prevent="submit">
             <label for="name">Név kiválasztása:</label>
             <div class="relative">
-                <select v-model="form.name"
+                <select v-model="selectedName"
                     class="block appearance-none w-full bg-grcay-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="name">
-                    <option v-for="option in names" :value="option.id">
+                    <option v-for="option in names" :key="option.id" :value="option">
                         {{ option.name }}
                     </option>
                 </select>
@@ -17,18 +17,40 @@
                     </svg>
                 </div>
             </div>
+            <div v-if="selectedName" class="mt-[30px]">
+                <div class="font-bold">Kiválasztott név</div>
+                <div>{{ selectedName.name }}</div>
+                <div class="flex text-sm text-[#666666] w-full gap-4">
+                    <div>
+                        <Link class="text-indigo-400 hover:text-indigo-600"
+                            :href="$route('names.modify', { id: selectedName.id })">Módosítás</Link>
+                    </div>
+                    <div>
+                        <Link class="text-indigo-400 hover:text-indigo-600"
+                            :href="$route('names.delete', { id: selectedName.id })">Törlés</Link>
+                    </div>
+                </div>
+                <div class="mt-[30px] flex flex-col gap-[30px]">
+                    <div>
+                        <div class="font-bold">Email címek</div>
+                        <div>Nincs megjeleníthető elem</div>
+                    </div>
+                    <div>
+                        <div class="font-bold">Telefonszámok</div>
+                        <div>Nincs megjeleníthető elem</div>
+                    </div>
+                </div>
+            </div>
         </form>
     </Layout>
 </template>
 
 <script setup>
 import Layout from '@/Layouts/Layout.vue'
-import { reactive } from 'vue'
+import { ref } from 'vue'
+import { Link } from '@inertiajs/vue3'
 
-const form = reactive({
-    name: null,
-})
-
+const selectedName = ref(null)
 
 defineProps({
     title: String,

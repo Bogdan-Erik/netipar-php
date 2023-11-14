@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Session;
 use App\Traits\RequestHandlerTrait;
 
 class StoreNameRequest extends FormRequest

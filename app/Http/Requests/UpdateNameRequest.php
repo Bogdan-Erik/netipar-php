@@ -3,15 +3,19 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use App\Traits\RequestHandlerTrait;
 
 class UpdateNameRequest extends FormRequest
 {
+    use RequestHandlerTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +26,12 @@ class UpdateNameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'max:50'],
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $this->failedValidationHelper($validator);
     }
 }

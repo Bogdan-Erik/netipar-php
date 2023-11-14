@@ -23,7 +23,24 @@ Route::get(
     [AppController::class, 'create']
 )->name('names.create');
 
+Route::get(
+    '/modify-name/{name}',
+    [AppController::class, 'modify']
+)->name('names.modify');
+
+
+Route::post(
+    '/update-name/{name}',
+    [AppController::class, 'update']
+)->name('names.update');
+
 Route::post(
     '/store-name',
     [AppController::class, 'store']
 )->name('names.store');
+
+
+Route::get(
+    '/delete-name/{name}',
+    [AppController::class, 'destroy']
+)->name('names.delete');
