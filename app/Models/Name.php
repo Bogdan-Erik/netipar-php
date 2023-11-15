@@ -17,4 +17,9 @@ class Name extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function emails()
+    {
+        return $this->hasMany(Email::class);
+    }
 }
