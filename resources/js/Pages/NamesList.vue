@@ -19,7 +19,11 @@
             </div>
             <div v-if="selectedName" class="mt-[30px]">
                 <div class="font-bold">Kiválasztott név</div>
-                <div>{{ selectedName.name }}</div>
+                <div class="flex">
+                    <div class="mr-[10px]" v-if="selectedName.picture_url"><img :src="selectedName.picture_url"
+                            class="w-8 h-8 rounded-full" /></div>
+                    <div>{{ selectedName.name }}</div>
+                </div>
                 <div class="flex text-sm text-[#666666] w-full gap-4">
                     <div>
                         <Link class="text-indigo-400 hover:text-indigo-600"

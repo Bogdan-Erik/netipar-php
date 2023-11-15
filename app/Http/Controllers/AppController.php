@@ -66,11 +66,19 @@ class AppController extends Controller
      */
     public function update(UpdateNameRequest $request, Name $name): \Illuminate\Http\RedirectResponse
     {
+        $data = $request->validated();
+
         try {
-            $name->update($request->all());
+            if ($request->hasFile('picture')) {
+                $data['picture'] =  $this->uploadImage($request->file('picture'));
+            } else {
+                $data['picture'] = $name->picture;
+            }
+
+            $name->update($data);
             Session::flash('message', 'Sikeres név módosítás!');
         } catch (\Exception $e) {
-            Session::flash('error', 'Hiba történt a név módosítása közben: ' . $e->getMessage());
+            Session::flash('ercror', 'Hiba történt a név módosítása közben: ' . $e->getMessage());
         }
 
         Session::flash('message', 'Sikeres név módosítás!');
@@ -86,7 +94,6 @@ class AppController extends Controller
      */
     public function store(StoreNameRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $data = $request->validated();
 
         try {
             if ($request->hasFile('picture')) {
