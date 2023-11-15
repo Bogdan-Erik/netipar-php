@@ -26,6 +26,7 @@ class StoreNameRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:50'],
+            'picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ];
     }
 

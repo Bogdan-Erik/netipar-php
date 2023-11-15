@@ -16,6 +16,7 @@ class Name extends Model
      */
     protected $fillable = [
         'name',
+        'picture'
     ];
 
     public function emails()
