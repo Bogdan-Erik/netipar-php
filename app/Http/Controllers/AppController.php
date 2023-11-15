@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreNameRequest;
 use App\Http\Requests\UpdateNameRequest;
+use App\Http\Resources\NameResource;
 use App\Models\Name;
+use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class AppController extends Controller
 {
+
+    use FileUploadTrait;
 /**
  * Display a listing of the resource.
  *
@@ -18,10 +22,11 @@ class AppController extends Controller
     public function index(): \Inertia\Response
     {
         $names = Name::with(['emails', 'telephones'])->get();
+        $nameResources = NameResource::collection($names);
 
         return Inertia::render('NamesList', [
             'title' => 'Nevek listája',
-            'names' => $names,
+            'names' => $nameResources,
         ]);
     }
 
@@ -81,11 +86,17 @@ class AppController extends Controller
      */
     public function store(StoreNameRequest $request): \Illuminate\Http\RedirectResponse
     {
+        $data = $request->validated();
+
         try {
-            Name::create($request->validated());
+            if ($request->hasFile('picture')) {
+                $data['picture'] =  $this->uploadImage($request->file('picture'));
+            }
+
+            Name::create($data);
             Session::flash('message', 'Sikeres hozzáadás!');
         } catch (\Exception $e) {
-            Session::flash('error', 'Hiba történt a név létrehozása közben közben: ' . $e->getMessage());
+            Session::flash('message', 'Hiba történt a név létrehozása közben közben: ' . $e->getMessage());
         }
 
         return redirect()->route('names.index');

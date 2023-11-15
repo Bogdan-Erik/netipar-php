@@ -9,6 +9,13 @@
                         placeholder="Teljes név" required="">
                 </div>
                 <div>
+                    <label for="picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kép</label>
+                    <input type="file" @input="form.picture = $event.target.files[0]" name="picture" id="picture"/>
+                    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                        {{ form.progress.percentage }}%
+                    </progress>
+                </div>
+                <div>
                     <button type="submit"
                         class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Hozzáadás</button>
                 </div>
@@ -18,12 +25,12 @@
 </template>
 
 <script setup>
-import { router } from '@inertiajs/vue3'
+import { router, useForm } from '@inertiajs/vue3'
 import Layout from '@/Layouts/Layout.vue'
-import { reactive } from 'vue'
 
-const form = reactive({
+const form = useForm({
     name: null,
+    picture: null,
 })
 
 function submit() {
