@@ -3,8 +3,8 @@
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div class="flex gap-3 text-lg mb-[30px]">
-                <Link class="text-indigo-400 hover:text-indigo-600" href="/">Nevek</Link>
-                <Link class="text-indigo-400 hover:text-indigo-600" href="/create-name">Új név felvétele</Link>
+                <Link class="text-indigo-400 hover:text-indigo-600" :href="$route('names.index')">Nevek</Link>
+                <Link class="text-indigo-400 hover:text-indigo-600" :href="$route('names.create')">Új név felvétele</Link>
             </div>
             <div>
                 <div v-if="$page.props.flash.message" class="alert border-[1px] border-gray-600 bg-gray-200 p-3 mb-[30px]">
