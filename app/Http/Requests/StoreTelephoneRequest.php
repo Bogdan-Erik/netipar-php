@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use App\Traits\RequestHandlerTrait;
 use Illuminate\Validation\Rule;
 
-class StoreEmailRequest extends FormRequest
+class StoreTelephoneRequest extends FormRequest
 {
     use RequestHandlerTrait;
 
@@ -26,17 +26,24 @@ class StoreEmailRequest extends FormRequest
      */
     public function rules(): array
     {
+        $nameId = $this->route('name');
         return [
-            'email' => ['required', 'max:100', 'unique:emails'],
+            'telephone' => [
+                'numeric',
+                Rule::unique('telephones', 'telephone')->where(function ($query) use ($nameId) {
+                    $query->where('name_id', $nameId->id);
+                }),
+            ],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'email.unique' => 'Ez az email cím már létezik a rendszerben!',
+            'telephone.unique' => 'Ez a telefonszám már hozzá van adva a kiválasztott felhasználóhoz!',
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
         $this->failedValidationHelper($validator);

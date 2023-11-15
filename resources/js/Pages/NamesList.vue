@@ -32,10 +32,8 @@
                 </div>
                 <div class="mt-[30px] flex flex-col gap-[30px]">
                     <EmailList :selectedName="selectedName"></EmailList>
-                    <div>
-                        <div class="font-bold">Telefonszámok</div>
-                        <div>Nincs megjeleníthető elem</div>
-                    </div>
+                    <TelephoneList :selectedName="selectedName"></TelephoneList>
+
                 </div>
             </div>
         </form>
@@ -45,6 +43,7 @@
 <script setup>
 import Layout from '@/Layouts/Layout.vue'
 import EmailList from '@/Components/EmailList.vue'
+import TelephoneList from '@/Components/TelephoneList.vue'
 import { ref } from 'vue'
 import { Link } from '@inertiajs/vue3'
 

@@ -22,4 +22,9 @@ class Name extends Model
     {
         return $this->hasMany(Email::class);
     }
+
+    public function telephones()
+    {
+        return $this->hasMany(Telephone::class);
+    }
 }

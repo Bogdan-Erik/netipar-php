@@ -10,6 +10,9 @@
                 <div v-if="$page.props.flash.message" class="alert border-[1px] border-gray-600 bg-gray-200 p-3 mb-[30px]">
                     {{ $page.props.flash.message }}
                 </div>
+                <div v-if="$page.props.flash.error" class="alert border-[1px] border-red-600 bg-gray-200 p-3 mb-[30px]">
+                    {{ $page.props.flash.error }}
+                </div>
             </div>
 
             <div
