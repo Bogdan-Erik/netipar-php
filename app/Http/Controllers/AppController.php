@@ -17,7 +17,7 @@ class AppController extends Controller
  */
     public function index(): \Inertia\Response
     {
-        $names = Name::with('emails')->get();
+        $names = Name::with(['emails', 'telephones'])->get();
 
         return Inertia::render('NamesList', [
             'title' => 'Nevek listája',

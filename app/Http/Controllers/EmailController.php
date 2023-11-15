@@ -32,7 +32,6 @@ class EmailController extends Controller
 
             Session::flash('message', 'Sikeres email hozzáadás!');
         } catch (\Exception $e) {
-            dd($e->getMessage());
             Session::flash('error', 'Hiba történt az email cím létrehozása közben közben: ' . $e->getMessage());
         }
 
@@ -43,7 +42,7 @@ class EmailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Email $email)
+    public function destroy(Email $email): \Illuminate\Http\RedirectResponse
     {
         try {
             $email->delete();

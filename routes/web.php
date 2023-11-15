@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\TelephoneController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 /*
@@ -31,4 +32,10 @@ Route::group(['prefix' => 'emails'], function () {
     Route::get('/create/{name}', [EmailController::class, 'create'])->name('emails.create');
     Route::post('/store/{name}', [EmailController::class, 'store'])->name('emails.store');
     Route::get('/delete/{email}', [EmailController::class, 'destroy'])->name('emails.delete');
+});
+
+Route::group(['prefix' => 'telephones'], function () {
+    Route::get('/create/{name}', [TelephoneController::class, 'create'])->name('telephones.create');
+    Route::post('/store/{name}', [TelephoneController::class, 'store'])->name('telephones.store');
+    Route::get('/delete/{telephone}', [TelephoneController::class, 'destroy'])->name('telephones.delete');
 });
