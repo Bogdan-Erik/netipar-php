@@ -51,7 +51,7 @@ class AppController extends Controller
     public function modify(Name $name): \Inertia\Response
     {
         return Inertia::render('ModifyName', [
-            'record' => $name,
+            'record' => new NameResource($name),
             'title' => 'Név szerkesztése',
         ]);
     }
