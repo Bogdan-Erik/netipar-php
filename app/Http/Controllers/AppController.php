@@ -14,11 +14,11 @@ class AppController extends Controller
 {
 
     use FileUploadTrait;
-/**
- * Display a listing of the resource.
- *
- * @return \Inertia\Response
- */
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Inertia\Response
+     */
     public function index(): \Inertia\Response
     {
         $names = Name::with(['emails', 'telephones'])->get();
@@ -30,11 +30,11 @@ class AppController extends Controller
         ]);
     }
 
-/**
- * Create page for the new resource.
- *
- * @return \Inertia\Response
- */
+    /**
+     * Create page for the new resource.
+     *
+     * @return \Inertia\Response
+     */
     public function create(): \Inertia\Response
     {
         return Inertia::render('CreateName', [
@@ -77,11 +77,11 @@ class AppController extends Controller
 
             $data['mail_address'] = $request->get('same_address') ? $request->get('address') : $data['mail_address'];
 
-
             $name->update($data);
+
             Session::flash('message', 'Sikeres név módosítás!');
         } catch (\Exception $e) {
-            Session::flash('ercror', 'Hiba történt a név módosítása közben: ' . $e->getMessage());
+            Session::flash('error', 'Hiba történt a név módosítása közben: ' . $e->getMessage());
         }
 
         Session::flash('message', 'Sikeres név módosítás!');
@@ -100,13 +100,28 @@ class AppController extends Controller
         $data = $request->validated();
 
         try {
+            $dataWithoutEmails = $request->except(['emails', 'telephones']);
+
             if ($request->hasFile('picture')) {
-                $data['picture'] =  $this->uploadImage($request->file('picture'));
+                $dataWithoutEmails['picture'] =  $this->uploadImage($request->file('picture'));
             }
 
-            $data['mail_address'] = $request->get('same_address') ? $request->get('address') : $data['mail_address'];
+            $dataWithoutEmails['mail_address'] = $request->get('same_address') ? $request->get('address') : $dataWithoutEmails['mail_address'];
 
-            Name::create($data);
+            $name = Name::create($dataWithoutEmails);
+
+            if (isset($data['emails']) && count($data['emails']) > 0) {
+                foreach ($data['emails'] as $email) {
+                    $name->emails()->create(['email' => $email]);
+                }
+            }
+
+            if (isset($data['telephones']) && count($data['telephones']) > 0) {
+                foreach ($data['telephones'] as $telephone) {
+                    $name->telephones()->create(['telephone' => $telephone]);
+                }
+            }
+
             Session::flash('message', 'Sikeres hozzáadás!');
         } catch (\Exception $e) {
             Session::flash('message', 'Hiba történt a név létrehozása közben közben: ' . $e->getMessage());
