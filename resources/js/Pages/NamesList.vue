@@ -24,6 +24,10 @@
                             class="w-8 h-8 rounded-full" /></div>
                     <div>{{ selectedName.name }}</div>
                 </div>
+                <div>
+                    <div>Lakcím: {{ selectedName.address ?? '-' }}</div>
+                    <div>Levelezési cím: {{ selectedName.mail_address ?? '-' }}</div>
+                </div>
                 <div class="flex text-sm text-[#666666] w-full gap-4">
                     <div>
                         <Link class="text-indigo-400 hover:text-indigo-600"

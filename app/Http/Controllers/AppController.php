@@ -75,6 +75,9 @@ class AppController extends Controller
                 $data['picture'] = $name->picture;
             }
 
+            $data['mail_address'] = $request->get('same_address') ? $request->get('address') : $data['mail_address'];
+
+
             $name->update($data);
             Session::flash('message', 'Sikeres név módosítás!');
         } catch (\Exception $e) {
@@ -94,11 +97,14 @@ class AppController extends Controller
      */
     public function store(StoreNameRequest $request): \Illuminate\Http\RedirectResponse
     {
+        $data = $request->validated();
 
         try {
             if ($request->hasFile('picture')) {
                 $data['picture'] =  $this->uploadImage($request->file('picture'));
             }
+
+            $data['mail_address'] = $request->get('same_address') ? $request->get('address') : $data['mail_address'];
 
             Name::create($data);
             Session::flash('message', 'Sikeres hozzáadás!');
