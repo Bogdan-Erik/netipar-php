@@ -100,7 +100,7 @@ class AppController extends Controller
         $data = $request->validated();
 
         try {
-            $dataWithoutEmails = $request->except('emails');
+            $dataWithoutEmails = $request->except(['emails', 'telephones']);
 
             if ($request->hasFile('picture')) {
                 $dataWithoutEmails['picture'] =  $this->uploadImage($request->file('picture'));
@@ -113,6 +113,12 @@ class AppController extends Controller
             if (isset($data['emails']) && count($data['emails']) > 0) {
                 foreach ($data['emails'] as $email) {
                     $name->emails()->create(['email' => $email]);
+                }
+            }
+
+            if (isset($data['telephones']) && count($data['telephones']) > 0) {
+                foreach ($data['telephones'] as $telephone) {
+                    $name->telephones()->create(['telephone' => $telephone]);
                 }
             }
 

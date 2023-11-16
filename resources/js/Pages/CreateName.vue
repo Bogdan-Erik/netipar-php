@@ -16,9 +16,17 @@
                     <label for="emails" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email címek*</label>
                     <div v-for="(email, index) in form.emails" :key="index">
                         <input type="email" v-model="form.emails[index]" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Email cím">
-                        <button @click.prevent="removeEmail(index)" class="text-red-600 ml-2">Törlés</button>
+                        <button @click.prevent="removeElement('emails', index)" class="text-red-600 ml-2">Törlés</button>
                     </div>
-                    <button @click.prevent="addEmail" class="text-blue-600 mt-2">Új cím hozzáadása</button>
+                    <button @click.prevent="addElement('emails')" class="text-blue-600 mt-2">Új cím hozzáadása</button>
+                </div>
+                <div>
+                    <label for="telephones" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefonszámok</label>
+                    <div v-for="(telephone, index) in form.telephones" :key="index">
+                        <input type="text" v-model="form.telephones[index]" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Telefonszám">
+                        <button @click.prevent="removeElement('telephones', index)" class="text-red-600 ml-2">Törlés</button>
+                    </div>
+                    <button @click.prevent="addElement('telephones')" class="text-blue-600 mt-2">Új cím hozzáadása</button>
                 </div>
                 <div>
                     <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lakcím</label>
@@ -53,6 +61,7 @@ const form = useForm({
     name: null,
     picture: null,
     emails: [],
+    telephones: [],
     address: null,
     mail_address: null,
     same_address: false,
@@ -62,12 +71,12 @@ function submit() {
     router.post('/names/store', form)
 }
 
-function addEmail() {
-    form.emails.push('');
+function addElement(key = 'emails') {
+    form[key]?.push('');
 }
 
-function removeEmail(index) {
-    form.emails.splice(index, 1);
+function removeElement(key = 'emails', index) {
+    form[key]?.splice(index, 1);
 }
 
 defineProps({

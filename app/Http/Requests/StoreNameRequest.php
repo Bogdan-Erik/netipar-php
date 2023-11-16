@@ -30,6 +30,7 @@ class StoreNameRequest extends FormRequest
             'picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'emails' => ['required', 'max:100'],
             'emails.*' => ['required', 'max:100', 'email', Rule::unique('emails', 'email'), 'distinct'],
+            'telephones.*' => ['numeric', 'distinct'],
             'address' => ['max:200'],
             'mail_address' => ['max:200'],
         ];
@@ -46,6 +47,8 @@ class StoreNameRequest extends FormRequest
             'emails.required' => 'Legalább 1 email cím megadása kötelező!',
             'emails.*.required' => 'Legalább 1 email cím megadása kötelező!',
             'emails.*.distinct' => 'Ugyan az az email cím többször van hozzáadva!',
+            'emails.*.unique' => 'Az email cím már létezik a rendszerben!',
+            'telephones.*.distinct' => 'Ugyan az a telefonszám többször van hozzáadva!',
         ];
     }
 }
